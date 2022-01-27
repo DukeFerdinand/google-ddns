@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: google-ddns
+  name: google-ddns-job
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+            - name: regcred
+          containers:
+            - name: google-ddns
+              # put your image here
+              image: registry.dougflynn.dev/google-ddns
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: TARGET_HOSTNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: TARGET_HOSTNAME
+                - name: GOOGLE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: GOOGLE_USER
+                - name: GOOGLE_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: GOOGLE_USER
+                - name: SENTRY_URI
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: SENTRY_URI
+          restartPolicy: OnFailure
