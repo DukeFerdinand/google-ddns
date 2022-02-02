@@ -21,6 +21,14 @@ if __name__ == '__main__':
     user = os.environ['GOOGLE_USER']
     password = os.environ['GOOGLE_PASS']
 
+    if os.environ.get('DEBUG') is not None:
+        print('DEBUG LOG')
+        print('=========================')
+        print('USER:', user)
+        print('PASSWORD:', password)
+        print('HOST:', hostname)
+        print('=========================')
+
     print(f"Configuring: {hostname}")
     url = f'https://{user}:{password}@domains.google.com/nic/update?hostname={hostname}&myip={ip}'
     print("Updating public IP...")
