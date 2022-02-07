@@ -31,7 +31,7 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: ddns-secret
-                      key: GOOGLE_USER
+                      key: GOOGLE_PASS
                 - name: SENTRY_URI
                   valueFrom:
                     secretKeyRef:
